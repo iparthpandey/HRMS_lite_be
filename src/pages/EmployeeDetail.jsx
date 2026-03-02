@@ -4,7 +4,6 @@ import {
     RadialBarChart, RadialBar, ResponsiveContainer,
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Cell
 } from 'recharts';
-import { ArrowLeft, Briefcase, CalendarCheck, CalendarX, TrendingUp, Check, XCircle as XIcon, Trash2, Mail, Hash } from 'lucide-react';
 import { fetchEmployeeById, fetchDepartments, updateAttendance, deleteEmployee } from '../api';
 
 export default function EmployeeDetail() {
@@ -68,9 +67,13 @@ export default function EmployeeDetail() {
 
     if (!emp) return (
         <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--text-muted)' }}>
-            <div style={{ fontSize: 48, marginBottom: 12 }}>🔍</div>
+            <div style={{ marginBottom: 16, color: 'var(--accent-primary)', display: 'flex', justifyContent: 'center' }}>
+                <span className="material-icons" style={{ fontSize: 48 }}>search</span>
+            </div>
             <div>Employee not found</div>
-            <button className="back-btn" style={{ marginTop: 24 }} onClick={() => navigate('/employees')}>← Back to Employees</button>
+            <button className="back-btn" style={{ marginTop: 24 }} onClick={() => navigate('/employees')}>
+                <span className="material-icons" style={{ fontSize: 18, marginRight: 8 }}>chevron_left</span> Back to Employees
+            </button>
         </div>
     );
 
@@ -99,8 +102,8 @@ export default function EmployeeDetail() {
 
     return (
         <div>
-            <button className="back-btn" onClick={() => navigate('/employees')}>
-                <ArrowLeft size={16} /> Back to Employees
+            <button className="back-btn" onClick={() => navigate('/employees')} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span className="material-icons" style={{ fontSize: 18 }}>arrow_back</span> Back to Employees
             </button>
 
             {/* Profile Header Card */}
@@ -122,34 +125,34 @@ export default function EmployeeDetail() {
                                 onClick={() => handleUpdateAttendance('present')}
                                 style={{ cursor: 'pointer', border: 'none', background: emp.status === 'present' ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.05)', color: emp.status === 'present' ? '#10b981' : 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 700 }}
                             >
-                                <Check size={14} /> MARK PRESENT
+                                <span className="material-icons" style={{ fontSize: 16 }}>check</span> MARK PRESENT
                             </button>
                             <button
                                 onClick={() => handleUpdateAttendance('leave')}
                                 style={{ cursor: 'pointer', border: 'none', background: emp.status === 'leave' ? 'rgba(245,158,11,0.1)' : 'rgba(255,255,255,0.05)', color: emp.status === 'leave' ? '#f59e0b' : 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 700 }}
                             >
-                                <XIcon size={14} /> MARK ABSENT
+                                <span className="material-icons" style={{ fontSize: 16 }}>close</span> MARK ABSENT
                             </button>
                             <button
                                 onClick={handleDeleteEmployee}
                                 style={{ cursor: 'pointer', border: 'none', background: 'rgba(239,68,68,0.1)', color: '#ef4444', display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 700 }}
                             >
-                                <Trash2 size={14} /> DELETE
+                                <span className="material-icons" style={{ fontSize: 16 }}>delete</span> DELETE
                             </button>
                         </div>
                     </div>
                     <div style={{ display: 'flex', gap: 24, marginTop: 10, flexWrap: 'wrap' }}>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-                            <Hash size={14} color={dept?.color} /> {emp.emp_id}
+                            <span className="material-icons" style={{ fontSize: 16, color: dept?.color }}>tag</span> {emp.emp_id}
                         </span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-                            <Mail size={14} color={dept?.color} /> {emp.email}
+                            <span className="material-icons" style={{ fontSize: 16, color: dept?.color }}>mail</span> {emp.email}
                         </span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-                            <Briefcase size={14} color={dept?.color} /> {emp.role}
+                            <span className="material-icons" style={{ fontSize: 16, color: dept?.color }}>work</span> {emp.role}
                         </span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, color: 'var(--text-secondary)' }}>
-                            <span style={{ fontSize: 14 }}>{dept?.icon}</span> {dept?.name}
+                            <span className="material-icons" style={{ fontSize: 16, color: dept?.color }}>{dept?.icon}</span> {dept?.name}
                         </span>
                     </div>
                 </div>
@@ -179,7 +182,7 @@ export default function EmployeeDetail() {
                             <div className="chart-title">Attendance Rate</div>
                             <div className="chart-subtitle">This month</div>
                         </div>
-                        <TrendingUp size={18} color={dept?.color} />
+                        <span className="material-icons" style={{ fontSize: 18, color: dept?.color }}>trending_up</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
                         <div style={{ position: 'relative', width: 180, height: 180 }}>
@@ -202,15 +205,15 @@ export default function EmployeeDetail() {
 
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                             {[
-                                { label: 'Working Days', value: emp.working_days, color: dept?.color, icon: <CalendarCheck size={14} /> },
-                                { label: 'Leave Days', value: emp.leaves_taken, color: '#ef4444', icon: <CalendarX size={14} /> },
-                                { label: 'Total Work Days', value: emp.total_days, color: 'var(--text-secondary)', icon: <TrendingUp size={14} /> },
+                                { label: 'Working Days', value: emp.working_days, color: dept?.color, icon: 'event_available' },
+                                { label: 'Leave Days', value: emp.leaves_taken, color: '#ef4444', icon: 'event_busy' },
+                                { label: 'Total Work Days', value: emp.total_days, color: 'var(--text-secondary)', icon: 'analytics' },
                             ].map(item => (
                                 <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                                     <div style={{
                                         width: 36, height: 36, borderRadius: 10, background: item.color + '20',
                                         display: 'flex', alignItems: 'center', justifyContent: 'center', color: item.color,
-                                    }}>{item.icon}</div>
+                                    }}><span className="material-icons" style={{ fontSize: 18 }}>{item.icon}</span></div>
                                     <div>
                                         <div style={{ fontSize: 20, fontWeight: 700, color: item.color, lineHeight: 1 }}>{item.value}</div>
                                         <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>{item.label}</div>

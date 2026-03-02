@@ -3,7 +3,6 @@ import {
     AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
     XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
-import { TrendingUp, TrendingDown, Users, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { fetchEmployees, fetchDepartments } from '../api';
 import { monthlyAttendance, weeklyTrend } from '../data/mockData';
 
@@ -74,7 +73,7 @@ export default function Dashboard() {
                     <p className="page-subtitle">Real-time attendance overview across all departments</p>
                 </div>
                 <div className="date-badge">
-                    <Clock size={14} />
+                    <span className="material-icons" style={{ fontSize: 16, marginRight: 8 }}>schedule</span>
                     {dateStr}
                 </div>
             </div>
@@ -82,22 +81,22 @@ export default function Dashboard() {
             {/* KPI Cards */}
             <div className="kpi-grid">
                 <KpiCard
-                    icon="👥" iconBg="rgba(99,102,241,0.15)" iconColor="#6366f1"
+                    icon="groups" iconBg="rgba(99,102,241,0.15)" iconColor="#6366f1"
                     value={totalEmployees} label="Total Employees"
                     change="+2 this month" up={true}
                 />
                 <KpiCard
-                    icon="✅" iconBg="rgba(16,185,129,0.15)" iconColor="#10b981"
+                    icon="check_circle" iconBg="rgba(16,185,129,0.15)" iconColor="#10b981"
                     value={presentToday} label="Present Today"
                     change={`${attendanceRate}% attendance`} up={true}
                 />
                 <KpiCard
-                    icon="🏖️" iconBg="rgba(245,158,11,0.15)" iconColor="#f59e0b"
+                    icon="event_busy" iconBg="rgba(245,158,11,0.15)" iconColor="#f59e0b"
                     value={onLeave} label="On Leave"
                     change="vs 3 yesterday" up={false}
                 />
                 <KpiCard
-                    icon="📈" iconBg="rgba(139,92,246,0.15)" iconColor="#8b5cf6"
+                    icon="trending_up" iconBg="rgba(139,92,246,0.15)" iconColor="#8b5cf6"
                     value={`${attendanceRate}%`} label="Avg Attendance"
                     change="+2.1% vs last month" up={true}
                 />
@@ -112,7 +111,7 @@ export default function Dashboard() {
                             <div className="chart-title">Monthly Attendance Trend</div>
                             <div className="chart-subtitle">Present vs Leave — last 7 months</div>
                         </div>
-                        <TrendingUp size={18} color="var(--accent-primary)" />
+                        <span className="material-icons" style={{ fontSize: 18, color: 'var(--accent-primary)' }}>trending_up</span>
                     </div>
                     <ResponsiveContainer width="100%" height={240}>
                         <AreaChart data={monthlyAttendance} margin={{ top: 4, right: 8, left: -16, bottom: 0 }}>
@@ -239,13 +238,13 @@ export default function Dashboard() {
 function KpiCard({ icon, iconBg, iconColor, value, label, change, up }) {
     return (
         <div className="kpi-card">
-            <div className="kpi-icon" style={{ background: iconBg }}>
-                <span style={{ fontSize: 22 }}>{icon}</span>
+            <div className="kpi-icon" style={{ background: iconBg, color: iconColor }}>
+                <span className="material-icons">{icon}</span>
             </div>
             <div className="kpi-value">{value}</div>
             <div className="kpi-label">{label}</div>
             <div className={`kpi-change ${up ? 'up' : 'down'}`}>
-                {up ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
+                <span className="material-icons" style={{ fontSize: 14 }}>{up ? 'trending_up' : 'trending_down'}</span>
                 {change}
             </div>
         </div>

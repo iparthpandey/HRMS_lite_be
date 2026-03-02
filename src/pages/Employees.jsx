@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Plus, X, Check, XCircle as XIcon, Trash2, Calendar, ChevronLeft, ChevronRight, ArrowUpDown } from 'lucide-react';
 import { fetchEmployees, fetchDepartments, createEmployee, updateAttendance, deleteEmployee, fetchAttendanceByDate } from '../api';
 
 const COLORS = ['#6366f1', '#ec4899', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6'];
@@ -142,7 +141,7 @@ export default function Employees() {
                 </div>
                 <div style={{ display: 'flex', gap: 12 }}>
                     <div className="date-badge" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '4px 12px', background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 10 }}>
-                        <Calendar size={16} />
+                        <span className="material-icons" style={{ fontSize: 16 }}>calendar_today</span>
                         <input
                             type="date"
                             value={selectedDate}
@@ -152,7 +151,7 @@ export default function Employees() {
                     </div>
                     <button className="add-employee-btn" onClick={() => setShowAddForm(true)}
                         style={{ background: 'var(--accent-primary)', color: 'white', border: 'none', padding: '10px 20px', borderRadius: 10, display: 'flex', alignItems: 'center', gap: 8, fontWeight: 600, cursor: 'pointer' }}>
-                        <Plus size={18} /> Add Employee
+                        <span className="material-icons" style={{ fontSize: 18 }}>add</span> Add Employee
                     </button>
                 </div>
             </div>
@@ -161,7 +160,7 @@ export default function Employees() {
                 <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.7)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: 20 }}>
                     <div className="card" style={{ width: '100%', maxWidth: 450, position: 'relative', padding: 32 }}>
                         <button onClick={() => setShowAddForm(false)} style={{ position: 'absolute', top: 16, right: 16, background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
-                            <X size={20} />
+                            <span className="material-icons">close</span>
                         </button>
                         <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 8 }}>Add New Employee</h2>
                         <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 24 }}>Enter employee details to add them to the system.</p>
@@ -203,7 +202,7 @@ export default function Employees() {
             {/* Filters */}
             <div className="filters-row">
                 <div style={{ position: 'relative', flex: 1, maxWidth: 300 }}>
-                    <Search size={14} style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+                    <span className="material-icons" style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)', fontSize: 18 }}>search</span>
                     <input
                         className="search-input"
                         style={{ paddingLeft: 38, width: '100%' }}
@@ -238,9 +237,9 @@ export default function Employees() {
                         key={d.id}
                         className={`filter-btn ${deptFilter === String(d.id) ? 'active' : ''}`}
                         onClick={() => { setDeptFilter(deptFilter === String(d.id) ? 'all' : String(d.id)); setCurrentPage(1); }}
-                        style={deptFilter === String(d.id) ? { background: d.color, borderColor: d.color } : {}}
+                        style={deptFilter === String(d.id) ? { background: d.color, borderColor: d.color, display: 'flex', alignItems: 'center', gap: 6 } : { display: 'flex', alignItems: 'center', gap: 6 }}
                     >
-                        {d.icon} {d.name}
+                        <span className="material-icons" style={{ fontSize: 16 }}>{d.icon}</span> {d.name}
                     </button>
                 ))}
             </div>
@@ -268,12 +267,12 @@ export default function Employees() {
                                         style={{ background: 'none', border: 'none', color: '#ef4444', opacity: 0.6, cursor: 'pointer', padding: 4 }}
                                         title="Delete Employee"
                                     >
-                                        <Trash2 size={16} />
+                                        <span className="material-icons" style={{ fontSize: 18 }}>delete</span>
                                     </button>
                                 </div>
                                 <div className="emp-role" style={{ fontSize: 13, marginBottom: 8 }}>{emp.role}</div>
-                                <div className="emp-dept-tag" style={{ background: dept?.color + '20', color: dept?.color, fontSize: 11, padding: '4px 8px', borderRadius: 6, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-                                    {dept?.icon} {dept?.name}
+                                <div className="emp-dept-tag" style={{ background: dept?.color + '20', color: dept?.color, fontSize: 11, padding: '4px 8px', borderRadius: 6, display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                                    <span className="material-icons" style={{ fontSize: 12 }}>{dept?.icon}</span> {dept?.name}
                                 </div>
                             </div>
                             <div className="emp-stats">
@@ -283,14 +282,14 @@ export default function Employees() {
                                         onClick={(e) => handleUpdateAttendance(emp.id, 'present', e)}
                                         style={{ cursor: 'pointer', border: 'none', background: currentStatus === 'present' ? 'rgba(16,185,129,0.15)' : 'rgba(255,255,255,0.05)', color: currentStatus === 'present' ? '#10b981' : 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 6, fontSize: 10, fontWeight: 700 }}
                                     >
-                                        <Check size={12} /> PRESENT
+                                        <span className="material-icons" style={{ fontSize: 14 }}>check</span> PRESENT
                                     </button>
                                     <button
                                         className={`status-badge ${currentStatus === 'leave' ? 'leave' : ''}`}
                                         onClick={(e) => handleUpdateAttendance(emp.id, 'leave', e)}
                                         style={{ cursor: 'pointer', border: 'none', background: currentStatus === 'leave' ? 'rgba(245,158,11,0.1)' : 'rgba(255,255,255,0.05)', color: currentStatus === 'leave' ? '#f59e0b' : 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4, padding: '4px 8px', borderRadius: 6, fontSize: 10, fontWeight: 700 }}
                                     >
-                                        <XIcon size={12} /> ABSENT
+                                        <span className="material-icons" style={{ fontSize: 14 }}>close</span> ABSENT
                                     </button>
                                 </div>
                                 <span className="emp-days">{emp.working_days}/{emp.total_days} days</span>
@@ -308,7 +307,9 @@ export default function Employees() {
 
             {filtered.length === 0 && (
                 <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--text-muted)' }}>
-                    <div style={{ fontSize: 40, marginBottom: 12 }}>🔍</div>
+                    <div style={{ marginBottom: 16, color: 'var(--accent-primary)', display: 'flex', justifyContent: 'center' }}>
+                        <span className="material-icons" style={{ fontSize: 48 }}>search</span>
+                    </div>
                     <div style={{ fontSize: 16, color: 'var(--text-secondary)' }}>No employees match your filters</div>
                 </div>
             )}
@@ -322,7 +323,7 @@ export default function Employees() {
                         onClick={() => setCurrentPage(prev => prev - 1)}
                         style={{ opacity: currentPage === 1 ? 0.4 : 1, cursor: currentPage === 1 ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
                     >
-                        <ChevronLeft size={16} /> Prev
+                        <span className="material-icons" style={{ fontSize: 18 }}>chevron_left</span> Prev
                     </button>
                     <span style={{ fontSize: 14, color: 'var(--text-secondary)', fontWeight: 600 }}>Page {currentPage} of {totalPages}</span>
                     <button
@@ -331,7 +332,7 @@ export default function Employees() {
                         onClick={() => setCurrentPage(prev => prev + 1)}
                         style={{ opacity: currentPage === totalPages ? 0.4 : 1, cursor: currentPage === totalPages ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: 4 }}
                     >
-                        Next <ChevronRight size={16} />
+                        Next <span className="material-icons" style={{ fontSize: 18 }}>chevron_right</span>
                     </button>
                 </div>
             )}

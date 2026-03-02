@@ -126,8 +126,8 @@ export default function Departments() {
                             zIndex: 1,
                         }} />
                         <div className="dept-top">
-                            <div className="dept-icon" style={{ background: d.color + '20' }}>
-                                {d.icon}
+                            <div className="dept-icon" style={{ background: d.color + '20', color: d.color }}>
+                                <span className="material-icons" style={{ fontSize: 26 }}>{d.icon}</span>
                             </div>
                             <div className="dept-headcount">
                                 <div className="number">{d.headcount}</div>

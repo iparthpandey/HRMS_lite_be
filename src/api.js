@@ -38,10 +38,14 @@ export async function fetchEmployees() {
 }
 
 export async function fetchDepartments() {
-    if (USE_MOCK) return getStoredDepartments();
+    if (USE_MOCK) {
+        const depts = getStoredDepartments();
+        return depts.map(d => ({ ...d, icon: d.icon?.toLowerCase() }));
+    }
     const response = await fetch(`${API_BASE_URL}/departments/`);
     if (!response.ok) throw new Error('Failed to fetch departments');
-    return response.json();
+    const data = await response.json();
+    return data.map(d => ({ ...d, icon: d.icon?.toLowerCase() }));
 }
 
 export async function fetchEmployeeById(id) {

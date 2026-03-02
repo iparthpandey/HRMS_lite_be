@@ -1,10 +1,10 @@
 export const MOCK_DEPARTMENTS = [
-    { id: 1, name: "Engineering", headcount: 24, color: "#6366f1", icon: "💻", avg_attendance: 92.0, description: "Software development and infrastructure" },
-    { id: 2, name: "Design", headcount: 10, color: "#ec4899", icon: "🎨", avg_attendance: 95.0, description: "UI/UX and brand design" },
-    { id: 3, name: "Marketing", headcount: 14, color: "#f59e0b", icon: "📢", avg_attendance: 88.0, description: "Growth, content and campaigns" },
-    { id: 4, name: "Sales", headcount: 18, color: "#10b981", icon: "💼", avg_attendance: 91.0, description: "Revenue and client relations" },
-    { id: 5, name: "HR", headcount: 8, color: "#3b82f6", icon: "🤝", avg_attendance: 97.0, description: "People operations and culture" },
-    { id: 6, name: "Finance", headcount: 9, color: "#8b5cf6", icon: "📊", avg_attendance: 94.0, description: "Accounting and financial planning" },
+    { id: 1, name: "Engineering", headcount: 24, color: "#6366f1", icon: "code", avg_attendance: 92.0, description: "Software development and infrastructure" },
+    { id: 2, name: "Design", headcount: 10, color: "#ec4899", icon: "palette", avg_attendance: 95.0, description: "UI/UX and brand design" },
+    { id: 3, name: "Marketing", headcount: 14, color: "#f59e0b", icon: "campaign", avg_attendance: 88.0, description: "Growth, content and campaigns" },
+    { id: 4, name: "Sales", headcount: 18, color: "#10b981", icon: "business_center", avg_attendance: 91.0, description: "Revenue and client relations" },
+    { id: 5, name: "HR", headcount: 8, color: "#3b82f6", icon: "groups", avg_attendance: 97.0, description: "People operations and culture" },
+    { id: 6, name: "Finance", headcount: 9, color: "#8b5cf6", icon: "bar_chart", avg_attendance: 94.0, description: "Accounting and financial planning" },
 ];
 
 export const MOCK_EMPLOYEES = [
