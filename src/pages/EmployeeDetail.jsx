@@ -42,6 +42,17 @@ export default function EmployeeDetail() {
         }
     };
 
+    const handleUpdateAttendance = async (status) => {
+        try {
+            const today = new Date().toISOString().split('T')[0];
+            await updateAttendance(id, status, today);
+            setEmp(prev => ({ ...prev, status }));
+            alert(`Marked ${emp.name} as ${status.toUpperCase()} for today.`);
+        } catch (error) {
+            alert('Error updating attendance: ' + error.message);
+        }
+    };
+
     if (loading) return <div style={{ padding: 40, textAlign: 'center' }}>Loading details...</div>;
 
     if (!emp) return (
