@@ -74,12 +74,31 @@ export default function Employees() {
     const handleUpdateAttendance = async (empId, status, e) => {
         e.stopPropagation();
         try {
+            const currentDayStatus = dailyAttendance[empId] || employees.find(e => e.id === empId)?.status;
+            if (currentDayStatus === status) return;
+
             await updateAttendance(empId, status, selectedDate);
+
             // Optimistic update
             setDailyAttendance(prev => ({ ...prev, [empId]: status }));
-            if (selectedDate === new Date().toISOString().split('T')[0]) {
-                setEmployees(prev => prev.map(emp => emp.id === empId ? { ...emp, status } : emp));
-            }
+
+            setEmployees(prev => prev.map(emp => {
+                if (emp.id === empId) {
+                    let newWorkingDays = emp.working_days;
+                    if (status === 'present' && (currentDayStatus === 'leave' || !currentDayStatus)) {
+                        newWorkingDays = Math.min(emp.total_days, emp.working_days + 1);
+                    } else if (status === 'leave' && currentDayStatus === 'present') {
+                        newWorkingDays = Math.max(0, emp.working_days - 1);
+                    }
+
+                    const updatedEmp = { ...emp, working_days: newWorkingDays };
+                    if (selectedDate === new Date().toISOString().split('T')[0]) {
+                        updatedEmp.status = status;
+                    }
+                    return updatedEmp;
+                }
+                return emp;
+            }));
         } catch (error) {
             alert('Error updating attendance: ' + error.message);
         }

@@ -45,8 +45,19 @@ export default function EmployeeDetail() {
     const handleUpdateAttendance = async (status) => {
         try {
             const today = new Date().toISOString().split('T')[0];
+            const oldStatus = emp.status;
+            if (oldStatus === status) return;
+
             await updateAttendance(id, status, today);
-            setEmp(prev => ({ ...prev, status }));
+
+            let newWorkingDays = emp.working_days;
+            if (status === 'present' && (oldStatus === 'leave' || !oldStatus)) {
+                newWorkingDays = Math.min(emp.total_days, emp.working_days + 1);
+            } else if (status === 'leave' && oldStatus === 'present') {
+                newWorkingDays = Math.max(0, emp.working_days - 1);
+            }
+
+            setEmp(prev => ({ ...prev, status, working_days: newWorkingDays }));
             alert(`Marked ${emp.name} as ${status.toUpperCase()} for today.`);
         } catch (error) {
             alert('Error updating attendance: ' + error.message);

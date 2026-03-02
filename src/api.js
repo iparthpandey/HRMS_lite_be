@@ -127,21 +127,37 @@ export async function deleteEmployee(id) {
 export async function updateAttendance(employeeId, status, date) {
     if (USE_MOCK) {
         const attendance = getStoredAttendance();
+        const emps = getStoredEmployees();
         const targetDate = date || new Date().toISOString().split('T')[0];
 
         if (!attendance[targetDate]) {
             attendance[targetDate] = {};
         }
-        attendance[targetDate][employeeId] = status;
-        localStorage.setItem('attendance', JSON.stringify(attendance));
 
-        // Also update the employee's main status if it's "today"
-        const today = new Date().toISOString().split('T')[0];
-        if (targetDate === today) {
-            const emps = getStoredEmployees();
-            const index = emps.findIndex(e => e.id === parseInt(employeeId));
-            if (index !== -1) {
-                emps[index].status = status;
+        const oldStatus = attendance[targetDate][employeeId];
+
+        // Only update if status actually changed
+        if (oldStatus !== status) {
+            attendance[targetDate][employeeId] = status;
+            localStorage.setItem('attendance', JSON.stringify(attendance));
+
+            const empIndex = emps.findIndex(e => e.id === parseInt(employeeId));
+            if (empIndex !== -1) {
+                const emp = emps[empIndex];
+
+                // Update working_days based on transition
+                if (status === 'present' && (oldStatus === 'leave' || !oldStatus)) {
+                    emp.working_days = Math.min(emp.total_days, emp.working_days + 1);
+                } else if (status === 'leave' && oldStatus === 'present') {
+                    emp.working_days = Math.max(0, emp.working_days - 1);
+                }
+
+                // Also update the employee's main status if it's "today"
+                const today = new Date().toISOString().split('T')[0];
+                if (targetDate === today) {
+                    emp.status = status;
+                }
+
                 localStorage.setItem('employees', JSON.stringify(emps));
             }
         }
