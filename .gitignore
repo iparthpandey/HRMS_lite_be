@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -22,3 +23,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+=======
+.venv/
+__pycache__/
+*.pyc
+attendance.db
+.ipynb_checkpoints/
+node_modules/
+dist/
+.env
+>>>>>>> 999aaf1 (Initial commit - HRMS Lite codebase)
