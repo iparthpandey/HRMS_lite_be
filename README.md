@@ -1,33 +1,51 @@
-# HRMS Lite - Frontend
+# HRMS - Human Resource Management System
 
-A professional, production-ready frontend for the Human Resource Management System (HRMS) Lite.
+A modern, production-ready Attendance Management System built with **React** (Vite) and **FastAPI**.
 
-## Features
-- **Employee Management**: Add, view, and delete employee records.
-- **Attendance Tracking**: Mark daily attendance (Present/Absent) for employees.
-- **Dashboard Summary**: Real-time stats on total employees, presence, and department breakdown.
-- **Professional UI**: Built with React, featuring a clean, responsive design with dark/light mode aesthetics.
-- **Form Validation**: Server-side and client-side validation for emails and unique IDs.
+## 🚀 Features
 
-## Tech Stack
-- **Framework**: React.js (Vite)
-- **Icons**: Lucide React
-- **Charts**: Recharts
-- **Styling**: Vanilla CSS (Custom UI kit)
+- **Personalized Dashboard**: Real-time KPIs for attendance rates and headcounts.
+- **Department Management**: Detailed breakdown of attendance by department.
+- **Employee Tracking**: Individual profiles with attendance history and stats.
+- **Interactive Charts**: Responsive data visualization using Recharts.
+- **Modern UI**: Dark-themed, premium interface built with Vanilla CSS variables.
 
-## Getting Started
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/iparthpandey/HRMS_lite.git
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Run the development server:
-   ```bash
-   npm run dev
-   ```
+## 🛠 Tech Stack
 
-## Assumptions
-- Backend is running at `http://localhost:8000`. Update `api.js` if the URL differs.
+- **Frontend**: React 18, Vite, Lucide React (Icons), Recharts.
+- **Backend**: FastAPI (Python 3.10+), SQLAlchemy (ORM).
+- **Database**: SQLite (Default/Dev), PostgreSQL (Production-ready).
+
+## ⚙️ Project Structure
+
+```text
+├── BE/               # FastAPI Backend
+│   ├── routers/      # API Endpoints (Employees, Attendance, Departments)
+│   ├── database.py   # DB Connection
+│   ├── db_models.py  # SQLAlchemy Models
+│   ├── models.py     # Pydantic Schemas
+│   └── seed.py       # DB Initialization Script
+├── FE/               # React Frontend
+│   ├── src/
+│   │   ├── api.js    # Centralized API service
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── index.css # Global Design System
+└── README.md
+```
+
+## 🚥 Local Setup
+
+### Backend (BE)
+1. Navigate to the BE folder: `cd BE`
+2. Install dependencies: `pip install fastapi uvicorn sqlalchemy`
+3. Run the seeding script: `python seed.py`
+4. Start the server: `uvicorn main:app --reload`
+
+### Frontend (FE)
+1. Navigate to the FE folder: `cd FE`
+2. Install dependencies: `npm install`
+3. Start the dev server: `npm run dev`
+
+## 📄 License
+MIT
